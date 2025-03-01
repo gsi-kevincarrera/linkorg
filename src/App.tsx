@@ -16,7 +16,7 @@ function App() {
           <Board />
         </Suspense>
       </ErrorBoundary>
-      <Toaster  richColors position='bottom-center' theme='light'/>
+      <Toaster  richColors position='top-center' theme='light'/>
     </div>
   )
 }
