@@ -65,9 +65,14 @@ export function useIndexedDB(
 
       // Update state with loaded links
       getAllRequest.onsuccess = () => {
+        const links = getAllRequest.result as Link[]
+        // Sorting by position
+        links.sort(
+          (a, b) => (a.position ?? Infinity) - (b.position ?? Infinity)
+        )
         setState({
           status: 'success',
-          data: getAllRequest.result as Link[],
+          data: links,
           error: null,
         })
       }
@@ -111,9 +116,14 @@ export function useIndexedDB(
 
     // Update state with refreshed links
     request.onsuccess = () => {
+        const links = request.result as Link[]
+        // Sorting by position
+        links.sort(
+          (a, b) => (a.position ?? Infinity) - (b.position ?? Infinity)
+        )
       setState({
         status: 'success',
-        data: request.result as Link[],
+        data: links,
         error: null,
       })
     }
@@ -154,7 +164,7 @@ export function useIndexedDB(
       // Handle successful link addition
       request.onsuccess = (event) => {
         const id = (event.target as IDBRequest).result
-        const newLink = { ...link, id }
+        const newLink = { ...link, id, position: state.data.length }
 
         // Update state with the new link
         setState((prevState) => ({

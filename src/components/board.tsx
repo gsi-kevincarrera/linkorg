@@ -11,8 +11,15 @@ import LinkAdditionDialog from './link-addition-dialog'
 export type LinkModalState = 'add' | 'edit' | 'none'
 
 const Board: React.FC = () => {
-  const { links, isLoading, error, deleteLink, addLink, editLink } =
-    useIndexedDB()
+  const {
+    links,
+    isLoading,
+    error,
+    deleteLink,
+    addLink,
+    editLink,
+    refreshLinks,
+  } = useIndexedDB()
   const { searchTerm, filteredLinks, handleSearch } = useSearchLinks(links)
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
   const [openAddLinkDialog, setOpenAddLinkDialog] =
@@ -40,6 +47,8 @@ const Board: React.FC = () => {
             links={filteredLinks}
             setSelectedLink={setSelectedLink}
             setOpenAddLinkDialog={setOpenAddLinkDialog}
+            editLink={editLink}
+            refreshLinks={refreshLinks}
           />
         )}
 
