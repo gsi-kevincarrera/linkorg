@@ -12,7 +12,6 @@ const Board: React.FC = () => {
 
   const { links, isLoading, error, deleteLink, addLink } = useIndexedDB()
   const { searchTerm, filteredLinks, handleSearch } = useSearchLinks(links)
-
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
   const [openAddLinkDialog, setOpenAddLinkDialog] = useState(false)
 

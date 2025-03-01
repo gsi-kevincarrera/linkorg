@@ -35,7 +35,7 @@ export default function TopControls({
     <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
       <Button onClick={() => setOpenAddLinkDialog(true)}>Add Link</Button>
       <Input
-        placeholder='Search url name'
+        placeholder='Search by link title or url'
         value={inputValue}
         onChange={handleInputChange}
         className='max-w-80'

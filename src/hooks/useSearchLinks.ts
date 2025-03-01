@@ -30,7 +30,11 @@ export function useSearchLinks(links: Link[]) {
    */
   const filteredLinks = useMemo(() => {
     if (!searchTerm) return links
-    return links.filter((link) => link.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    return links.filter(
+      (link) =>
+        link.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        link.url.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   }, [links, searchTerm])
   /**
    * Updates the URL search parameters based on search term
