@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
-import { ChangeEvent, SetStateActionBoolean } from '@/types/event-types'
+import { ChangeEvent, SetStateActionBoolean } from '@/types/ts-types'
 
 interface TopControlsProps {
   searchTerm: string
@@ -13,7 +13,7 @@ interface TopControlsProps {
 export default function TopControls({
   searchTerm,
   onSearch,
-  setOpenAddLinkDialog
+  setOpenAddLinkDialog,
 }: TopControlsProps) {
   const [inputValue, setInputValue] = useState(() => searchTerm)
 
@@ -33,13 +33,13 @@ export default function TopControls({
 
   return (
     <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
-        <Button onClick={() => setOpenAddLinkDialog(true)}>Add Link</Button>
-        <Input
-          placeholder='Search url name'
-          value={inputValue}
-          onChange={handleInputChange}
-          className='max-w-80'
-        />
+      <Button onClick={() => setOpenAddLinkDialog(true)}>Add Link</Button>
+      <Input
+        placeholder='Search url name'
+        value={inputValue}
+        onChange={handleInputChange}
+        className='max-w-80'
+      />
       <Button>Filters</Button>
     </div>
   )

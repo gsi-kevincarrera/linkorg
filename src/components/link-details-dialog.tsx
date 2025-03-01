@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -82,9 +83,14 @@ const LinkDetailsDialog: React.FC<LinkDetailsDialogProps> = ({
               </Button>
             </div>
           </div>
+          <DialogDescription />
         </DialogContent>
       </Dialog>
-      <ConfirmDeleteDialog open={confirmDelete} onCancel={onCancelDelete} onConfirm={onConfirmDelete}/>
+      <ConfirmDeleteDialog
+        open={confirmDelete}
+        onCancel={onCancelDelete}
+        onConfirm={onConfirmDelete}
+      />
     </>,
     document.body
   )
@@ -109,6 +115,7 @@ function ConfirmDeleteDialog({open, onConfirm, onCancel}:{open: boolean, onConfi
             </Button>
           </div>
         </div>
+        <DialogDescription />
       </DialogContent>
     </Dialog>, document.body
   )

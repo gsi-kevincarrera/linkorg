@@ -1,8 +1,13 @@
-import { Dialog, DialogHeader, DialogContent } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogHeader,
+  DialogContent,
+  DialogTitle,
+  DialogDescription
+} from '@/components/ui/dialog'
 import LinkAdditionForm from './link-addition-form'
 import { createPortal } from 'react-dom'
 import { Link } from './link-card'
-import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface Props {
   open: boolean
@@ -18,6 +23,7 @@ export default function LinkAdditionDialog({open, onClose, onAddLink}: Props) {
           <DialogTitle>Add Link</DialogTitle>
         </DialogHeader>
         <LinkAdditionForm closeDialog={onClose} onAddLink={onAddLink} />
+        <DialogDescription />
       </DialogContent>
     </Dialog>, document.body
   )

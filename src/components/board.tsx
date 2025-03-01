@@ -9,8 +9,10 @@ import { Link } from './link-card'
 import LinkAdditionDialog from './link-addition-dialog'
 
 const Board: React.FC = () => {
+
   const { links, isLoading, error, deleteLink, addLink } = useIndexedDB()
   const { searchTerm, filteredLinks, handleSearch } = useSearchLinks(links)
+
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
   const [openAddLinkDialog, setOpenAddLinkDialog] = useState(false)
 
@@ -32,7 +34,10 @@ const Board: React.FC = () => {
         {isLoading ? (
           <div className='p-8 text-center'>Loading links...</div>
         ) : (
-          <LinkList links={filteredLinks} setSelectedLink={setSelectedLink} />
+          <LinkList
+            links={filteredLinks}
+            setSelectedLink={setSelectedLink}
+          />
         )}
 
         <LinkDetailsDialog
