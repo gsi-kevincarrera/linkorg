@@ -2,22 +2,20 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
-import { ChangeEvent } from '@/types/event-types'
-import { Link } from './link-card'
+import { ChangeEvent, SetStateActionBoolean } from '@/types/event-types'
 
 interface TopControlsProps {
   searchTerm: string
   onSearch: (searchTerm: string) => void
-  onAddLink: (newLink: Link) => void
+  setOpenAddLinkDialog: SetStateActionBoolean
 }
 
 export default function TopControls({
   searchTerm,
   onSearch,
-  onAddLink
+  setOpenAddLinkDialog
 }: TopControlsProps) {
   const [inputValue, setInputValue] = useState(() => searchTerm)
-  const [linkInputValue, setLinkInputValue] = useState('')
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     onSearch(value)
@@ -32,36 +30,16 @@ export default function TopControls({
   useEffect(() => {
     setInputValue(searchTerm)
   }, [searchTerm])
-  
-  const handleAddLink = () => {
-    if(!linkInputValue) return
-    const newLink = {
-      title: 'Generic Name',
-      url: linkInputValue
-    }
-    onAddLink(newLink)
-  }
 
   return (
-    <div className='flex flex-col sm:flex-row gap-4 mb-6'>
-      <div className='flex gap-2 flex-1'>
-        <Input
-          value={linkInputValue}
-          placeholder='Paste your url here'
-          className='flex-1'
-          onChange={(e) => setLinkInputValue(e.target.value)}
-        />
-        <Button onClick={handleAddLink}>Confirm</Button>
-      </div>
-
-      <div className='flex-1'>
+    <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
+        <Button onClick={() => setOpenAddLinkDialog(true)}>Add Link</Button>
         <Input
           placeholder='Search url name'
           value={inputValue}
           onChange={handleInputChange}
+          className='max-w-80'
         />
-      </div>
-
       <Button>Filters</Button>
     </div>
   )

@@ -27,7 +27,7 @@ const LinkDetailsDialog: React.FC<LinkDetailsDialogProps> = ({
   return createPortal(
     <Dialog open={!!link} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className='sm:max-w-md'>
-        <DialogHeader className='flex justify-between items-center'>
+        <DialogHeader >
           <DialogTitle>{link.title}</DialogTitle>
         </DialogHeader>
 
@@ -53,7 +53,11 @@ const LinkDetailsDialog: React.FC<LinkDetailsDialogProps> = ({
           <div className='flex justify-between mt-4'>
             <Button
               variant='outline'
-              onClick={() => window.open(link.url, '_blank')}
+              onClick={() => {
+                const formattedLink = link.url.startsWith('http') ? link.url : `https://${link.url}`
+                console.log(formattedLink)
+                window.open(formattedLink, '_blank')
+              }}
             >
               Visit Site
             </Button>

@@ -1,7 +1,7 @@
 import { Component, ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
-  children: ReactNode // 👈 Asegura que acepte children
+  children: ReactNode 
   fallback: ReactNode
 }
 
@@ -17,7 +17,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error } // Captura el error en el estado
+    return { hasError: true, error }
   }
 
   render() {
