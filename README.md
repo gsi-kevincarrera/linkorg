@@ -4,6 +4,7 @@ Pending stuff
 [x] Add zod validation for the lead input
 [x] Add confirmation modal for link deletion
 [x] Make content draggable
+[x] Make link cards editable
 [] Add support for groups
 [] Develop filters
 [] Load link's Metadata

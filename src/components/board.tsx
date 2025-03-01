@@ -8,12 +8,15 @@ import { useState } from 'react'
 import { Link } from './link-card'
 import LinkAdditionDialog from './link-addition-dialog'
 
-const Board: React.FC = () => {
+export type LinkModalState = 'add' | 'edit' | 'none'
 
-  const { links, isLoading, error, deleteLink, addLink } = useIndexedDB()
+const Board: React.FC = () => {
+  const { links, isLoading, error, deleteLink, addLink, editLink } =
+    useIndexedDB()
   const { searchTerm, filteredLinks, handleSearch } = useSearchLinks(links)
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
-  const [openAddLinkDialog, setOpenAddLinkDialog] = useState(false)
+  const [openAddLinkDialog, setOpenAddLinkDialog] =
+    useState<LinkModalState>('none')
 
   return (
     <div className='min-h-screen bg-background p-8'>
@@ -36,18 +39,24 @@ const Board: React.FC = () => {
           <LinkList
             links={filteredLinks}
             setSelectedLink={setSelectedLink}
+            setOpenAddLinkDialog={setOpenAddLinkDialog}
           />
         )}
 
         <LinkDetailsDialog
-          link={selectedLink}
+          link={openAddLinkDialog === 'edit' ? null : selectedLink}
           onClose={() => setSelectedLink(null)}
           onDelete={deleteLink}
         />
         <LinkAdditionDialog
-          open={openAddLinkDialog}
-          onClose={() => setOpenAddLinkDialog(false)}
+          openState={openAddLinkDialog}
+          onClose={() => {
+            setOpenAddLinkDialog('none')
+            setSelectedLink(null)
+          }}
           onAddLink={addLink}
+          onEditLink={editLink}
+          link={selectedLink}
         />
       </div>
     </div>

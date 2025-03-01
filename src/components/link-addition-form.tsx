@@ -42,22 +42,43 @@ const LinkSchema = z.object({
 export default function LinkAdditionForm({
   closeDialog,
   onAddLink,
+  onEditLink,
+  link,
 }: {
   closeDialog: () => void
   onAddLink: (link: Omit<Link, 'id'>) => Promise<Link>
+  onEditLink: (newLink: Link) => Promise<string>
+  link: Link | null
 }) {
   const form = useForm<z.infer<typeof LinkSchema>>({
-    defaultValues: {
+    defaultValues: link ?? {
       title: '',
       url: '',
     },
     resolver: zodResolver(LinkSchema),
   })
 
-  const onSubmit = (data: z.infer<typeof LinkSchema>) => {
-    onAddLink(data)
-    closeDialog()
-    toast.success('Link added successfully')
+  const onSubmit = async (data: z.infer<typeof LinkSchema>) => {
+    try {
+      if (!link) {
+        await onAddLink(data)
+        toast.success('Link added successfully')
+      } else {
+        const editedLink: Link = {
+          ...data,
+          id: link.id,
+        }
+        await onEditLink(editedLink)
+        toast.success('Link edited successfully')
+      }
+      closeDialog()
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message)
+        return
+      }
+      toast.error('Something went wrong')
+    }
   }
 
   return (
@@ -89,7 +110,12 @@ export default function LinkAdditionForm({
             </FormItem>
           )}
         />
-        <Button type='submit'>Submit</Button>
+        <Button
+          disabled={form.formState.isSubmitting || !form.formState.isDirty}
+          type='submit'
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   )

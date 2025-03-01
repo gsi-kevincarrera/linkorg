@@ -2,12 +2,12 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
-import { ChangeEvent, SetStateActionBoolean } from '@/types/ts-types'
+import { ChangeEvent, SetStateActionLinkModalState } from '@/types/ts-types'
 
 interface TopControlsProps {
   searchTerm: string
   onSearch: (searchTerm: string) => void
-  setOpenAddLinkDialog: SetStateActionBoolean
+  setOpenAddLinkDialog: SetStateActionLinkModalState
 }
 
 export default function TopControls({
@@ -33,7 +33,7 @@ export default function TopControls({
 
   return (
     <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
-      <Button onClick={() => setOpenAddLinkDialog(true)}>Add Link</Button>
+      <Button onClick={() => setOpenAddLinkDialog('add')}>Add Link</Button>
       <Input
         placeholder='Search by link title or url'
         value={inputValue}

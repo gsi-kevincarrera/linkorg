@@ -222,6 +222,51 @@ export function useIndexedDB(
     })
   }
 
+  const editLink = ( newValue: Link): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      // Check if database is initialized
+      if (!db) {
+        const error = new Error('Database not initialized')
+        setState((prevState) => ({ ...prevState, error, status: 'error' }))
+        reject(error)
+        return
+      }
+
+      // Create transaction to edit the link
+      const transaction = db.transaction(storeName, 'readwrite')
+      const store = transaction.objectStore(storeName)
+      const request = store.put(newValue)
+
+      request.onsuccess = () => {
+        const index = state.data.findIndex((link) => link.id === newValue.id)
+        setState((prevState) => {
+          const data = [...prevState.data]
+          data[index] = newValue
+          return {
+            status: 'success',
+            data,
+            error: null,
+          }
+        })
+
+        resolve(newValue.id ?? '')
+      }
+
+      request.onerror = (event) => {
+        console.log('nooo')
+        const error = new Error(
+          `Error editing link: ${(event.target as IDBRequest).error}`
+        )
+        setState((prevState) => ({
+          ...prevState,
+          status: 'error',
+          error,
+        }))
+        reject(error)
+      }
+    })
+  }
+
   // Return state values and methods
   return {
     status: state.status,
@@ -232,6 +277,7 @@ export function useIndexedDB(
     isError: state.status === 'error',
     addLink,
     refreshLinks,
-    deleteLink
+    deleteLink,
+    editLink
   }
 }
