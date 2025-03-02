@@ -14,12 +14,14 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Link } from './link-card'
 import { toast } from 'sonner'
+import { TagInput } from './tag-input'
 
 const LinkSchema = z.object({
   title: z
     .string()
     .max(50, { message: 'Title must be less than 50 characters' })
     .min(1, { message: 'Enter the link title' }),
+  tags: z.array(z.string()),
   url: z.string().refine(
     (value) => {
       try {
@@ -44,16 +46,20 @@ export default function LinkAdditionForm({
   onAddLink,
   onEditLink,
   link,
+  existingTags,
 }: {
   closeDialog: () => void
   onAddLink: (link: Omit<Link, 'id'>) => Promise<Link>
   onEditLink: (newLink: Link) => Promise<string>
   link: Link | null
+  existingTags: string[]
 }) {
+  const defaultLink = {...link, tags: link?.tags ?? []}
   const form = useForm<z.infer<typeof LinkSchema>>({
-    defaultValues: link ?? {
+    defaultValues: defaultLink ?? {
       title: '',
       url: '',
+      tags: [],
     },
     resolver: zodResolver(LinkSchema),
   })
@@ -89,7 +95,7 @@ export default function LinkAdditionForm({
           name='title'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Title *</FormLabel>
               <FormControl>
                 <Input placeholder='Enter the title of the link' {...field} />
               </FormControl>
@@ -102,7 +108,7 @@ export default function LinkAdditionForm({
           name='url'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>URL</FormLabel>
+              <FormLabel>URL *</FormLabel>
               <FormControl>
                 <Input placeholder='eg: www.example.com' {...field} />
               </FormControl>
@@ -110,6 +116,24 @@ export default function LinkAdditionForm({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name='tags'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags</FormLabel>
+              <FormControl>
+                <TagInput
+                  selectedTags={field.value}
+                  onChange={field.onChange}
+                  existingTags={existingTags}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button
           disabled={form.formState.isSubmitting || !form.formState.isDirty}
           type='submit'

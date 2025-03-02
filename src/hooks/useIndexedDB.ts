@@ -277,6 +277,19 @@ export function useIndexedDB(
     })
   }
 
+  const getAllTags = () => {
+    const allTags = new Set<string>()
+
+    // Extract all unique tags from all links
+    state.data.forEach((link) => {
+      if (link.tags && Array.isArray(link.tags)) {
+        link.tags.forEach((tag) => allTags.add(tag))
+      }
+    })
+
+    return Array.from(allTags)
+  }
+
   // Return state values and methods
   return {
     status: state.status,
@@ -288,6 +301,7 @@ export function useIndexedDB(
     addLink,
     refreshLinks,
     deleteLink,
-    editLink
+    editLink,
+    getAllTags
   }
 }

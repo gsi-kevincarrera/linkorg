@@ -5,8 +5,8 @@ Pending stuff
 [x] Add confirmation modal for link deletion
 [x] Make content draggable
 [x] Make link cards editable
-[] Persist order state when dragging dropping
-[] Add support for tags
+[x] Persist order state when dragging dropping
+[x] Add support for tags
 [] Develop filters
 [] Add service worker for offline functioning
 [] Add support for groups

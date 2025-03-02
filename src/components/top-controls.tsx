@@ -33,14 +33,13 @@ export default function TopControls({
 
   return (
     <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
-      <Button onClick={() => setOpenAddLinkDialog('add')}>Add Link</Button>
       <Input
-        placeholder='Search by link title or url'
+        placeholder='Search by link title, url or tag'
         value={inputValue}
         onChange={handleInputChange}
         className='max-w-80'
       />
-      <Button>Filters</Button>
+      <Button onClick={() => setOpenAddLinkDialog('add')}>Add Link</Button>
     </div>
   )
 }

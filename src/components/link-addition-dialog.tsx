@@ -15,7 +15,8 @@ interface Props {
   onClose: () => void
   onAddLink: (link: Omit<Link, 'id'>) => Promise<Link>
   onEditLink: (newLink: Link) => Promise<string>
-  link: Link | null
+  link: Link | null,
+  existingTags: string[]
 }
 
 export default function LinkAdditionDialog({
@@ -23,7 +24,8 @@ export default function LinkAdditionDialog({
   onClose,
   onAddLink,
   onEditLink,
-  link
+  link,
+  existingTags
 }: Props) {
   return createPortal(
     <Dialog
@@ -36,7 +38,7 @@ export default function LinkAdditionDialog({
             {openState === 'add' ? 'Add Link' : 'Edit Link'}
           </DialogTitle>
         </DialogHeader>
-        <LinkAdditionForm closeDialog={onClose} onAddLink={onAddLink} onEditLink={onEditLink} link={link} />
+        <LinkAdditionForm closeDialog={onClose} onAddLink={onAddLink} onEditLink={onEditLink} link={link} existingTags={existingTags} />
         <DialogDescription />
       </DialogContent>
     </Dialog>,

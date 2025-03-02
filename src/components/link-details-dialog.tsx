@@ -11,6 +11,7 @@ import {
 import { Link } from './link-card'
 import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
+import TagCapsule from './tag-capsule'
 
 interface LinkDetailsDialogProps {
   link: Link | null
@@ -43,6 +44,13 @@ const LinkDetailsDialog: React.FC<LinkDetailsDialogProps> = ({
           <DialogHeader>
             <DialogTitle>{link.title}</DialogTitle>
           </DialogHeader>
+
+          <div className='flex flex-wrap gap-1 my-1'>
+            {link.tags &&
+              link.tags.map((tag) => (
+                <TagCapsule key={tag} tag={tag} removable={false} />
+              ))}
+          </div>
 
           <div className='space-y-4 py-4'>
             <div>

@@ -19,6 +19,7 @@ const Board: React.FC = () => {
     addLink,
     editLink,
     refreshLinks,
+    getAllTags
   } = useIndexedDB()
   const { searchTerm, filteredLinks, handleSearch } = useSearchLinks(links)
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
@@ -66,6 +67,7 @@ const Board: React.FC = () => {
           onAddLink={addLink}
           onEditLink={editLink}
           link={selectedLink}
+          existingTags={getAllTags()}
         />
       </div>
     </div>

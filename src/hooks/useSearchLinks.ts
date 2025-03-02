@@ -33,7 +33,9 @@ export function useSearchLinks(links: Link[]) {
     return links.filter(
       (link) =>
         link.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        link.url.toLowerCase().includes(searchTerm.toLowerCase())
+        link.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        link.tags?.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+
     )
   }, [links, searchTerm])
   /**
