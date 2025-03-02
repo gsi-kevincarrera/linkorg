@@ -7,7 +7,6 @@ Pending stuff
 [x] Make link cards editable
 [x] Persist order state when dragging dropping
 [x] Add support for tags
-[] Develop filters
 [] Add service worker for offline functioning
 [] Add support for groups
 
