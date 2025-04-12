@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { ChangeEvent, SetStateActionLinkModalState } from '@/types/ts-types'
 
@@ -26,10 +26,6 @@ export default function TopControls({
     setInputValue(value)
     debouncedSearch(value)
   }
-
-  useEffect(() => {
-    setInputValue(searchTerm)
-  }, [searchTerm])
 
   return (
     <div className='flex flex-col sm:flex-row sm:justify-center gap-4 mb-6'>
